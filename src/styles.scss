@@ -1,1 +1,67 @@
-/* You can add global styles to this file, and also import other style files */
+:root{--bg:#f2f4f1;--ink:#1c2b2d;--mut:#66787a;--side:#12343b;--acc:#e9a23b;--acc-d:#b87a1a;--card:#fff;--line:#dfe5e2;--bad:#c0392b;--ok:#2e7d5b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Avenir Next","Segoe UI",system-ui,sans-serif;font-size:15px;line-height:1.45}
+h1{font-size:1.5rem;margin:0}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.shell{display:flex;min-height:100vh}
+aside{width:230px;background:var(--side);color:#e8f0ee;padding:18px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+aside h2{margin:0 8px 18px;font-size:1.2rem}
+aside a{padding:10px 12px;border-radius:8px}
+aside a:hover{background:#ffffff14}
+aside a.on{background:var(--acc);color:#2a1d05;font-weight:600}
+.me{margin-top:auto;padding:8px;font-size:.85rem;display:flex;flex-direction:column;gap:8px}
+main{flex:1;padding:20px;min-width:0}
+header{display:none}
+.scrim{display:none}
+.bar{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+.tbl{overflow-x:auto;padding:0}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:.8rem;color:var(--mut);font-weight:600}
+td.r,th.r{text-align:right}
+input,select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff;min-width:0}
+.btn{display:inline-block;padding:9px 14px;border:0;border-radius:8px;background:var(--side);color:#fff;font:inherit;cursor:pointer}
+.btn:hover{filter:brightness(1.15)}
+.btn.alt{background:#e4ebe8;color:var(--ink)}
+.btn.pri{background:var(--acc);color:#2a1d05;font-weight:600}
+.btn.bad{background:var(--bad)}
+.btn.sm{padding:5px 10px;font-size:.85rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;align-items:end}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--mut)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;border-left:5px solid var(--acc)}
+.stat b{display:block;font-size:1.5rem}
+.stat span{color:var(--mut);font-size:.85rem}
+.stat.warn{border-left-color:var(--bad)}
+.badge{padding:2px 8px;border-radius:99px;font-size:.78rem;background:#e4ebe8}
+.badge.low{background:#f8dcd8;color:var(--bad)}
+.badge.ok{background:#d9efe4;color:var(--ok)}
+.note{background:#fff6e0;border:1px solid #f0d9a0;padding:10px 12px;border-radius:8px}
+.err{color:var(--bad)}
+.chart{display:flex;gap:10px;align-items:flex-end;height:150px}
+.chart div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:.75rem;color:var(--mut)}
+.chart i{display:block;width:100%;background:var(--acc);border-radius:4px 4px 0 0;min-height:2px}
+.pos{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:left;font:inherit;cursor:pointer}
+.tile:hover:not(:disabled){border-color:var(--acc)}
+.tile:disabled{opacity:.45}
+.tile b{display:block}
+.cart{position:sticky;top:16px}
+.line{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+.total{font-size:1.4rem;font-weight:700;display:flex;justify-content:space-between;margin:12px 0}
+.login{min-height:100vh;display:grid;place-items:center;background:var(--side);padding:16px}
+.login form{width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px}
+@media(max-width:860px){
+  aside{position:fixed;z-index:20;left:0;transform:translateX(-100%);transition:transform .2s}
+  aside.open{transform:none}
+  .scrim{display:block;position:fixed;inset:0;background:#0006;z-index:10}
+  header{display:block;margin:-4px 0 12px}
+  .burger{font-size:1.4rem;background:var(--side);color:#fff;border:0;border-radius:8px;padding:6px 12px}
+  .pos{grid-template-columns:1fr}.cart{position:static}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
