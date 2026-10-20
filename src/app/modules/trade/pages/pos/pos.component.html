@@ -1,0 +1,34 @@
+<app-page-header>
+  <input placeholder="Search name or SKU" [ngModel]="search()" (ngModelChange)="search.set($event)">
+</app-page-header>
+<app-notice [message]="message()" />
+
+<div class="pos">
+  <div class="tiles">
+    @for (i of shown(); track i.id) {
+      <button class="tile" [disabled]="i.stock < 1" (click)="add(i)">
+        <b>{{ i.name }}</b><span class="sku">{{ i.sku }}</span><br>
+        {{ i.price | currency:'INR':'symbol':'1.0-2' }}
+        <span class="badge" [class.low]="i.stock <= i.reorderLevel">{{ i.stock }} left</span>
+      </button>
+    } @empty {
+      <p>No items match.</p>
+    }
+  </div>
+
+  <div class="card cart">
+    <b>Current bill</b>
+    @for (c of cart(); track c.item.id) {
+      <div class="line">
+        <span class="name">{{ c.item.name }}<br><small>{{ c.item.price | currency:'INR' }}</small></span>
+        <button class="btn alt sm" (click)="change(c, -1)" aria-label="Less">−</button>
+        {{ c.qty }}
+        <button class="btn alt sm" (click)="change(c, 1)" aria-label="More">+</button>
+      </div>
+    } @empty {
+      <p class="empty">Tap an item to add it.</p>
+    }
+    <div class="total"><span>Total</span><span>{{ total() | currency:'INR' }}</span></div>
+    <button class="btn pri full" [disabled]="!cart().length || busy()" (click)="pay()">Complete sale</button>
+  </div>
+</div>

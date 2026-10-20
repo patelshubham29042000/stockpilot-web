@@ -1,0 +1,70 @@
+:host{display:block}
+.shell{display:flex;min-height:100vh}
+
+/* ---- sidebar ---- */
+aside{width:248px;flex:none;position:sticky;top:0;height:100vh;height:100dvh;display:flex;flex-direction:column;gap:2px;
+  padding:16px 12px max(16px,env(safe-area-inset-bottom));background:var(--side);color:#e8f0ee;overflow-y:auto;z-index:30}
+.brand{display:flex;align-items:center;gap:10px;margin:0 6px 14px}
+.logo{width:42px;height:42px;flex:none;border-radius:50%;box-shadow:0 0 0 2px #ffffff26}
+.brand h2{margin:0;font-size:1.1rem;line-height:1.1}
+.tagline{margin:3px 0 0;font-size:.7rem;line-height:1.25;color:#9fb8b4}
+
+/* ---- menu rows ---- */
+.nav{display:flex;flex-direction:column;gap:2px;margin-bottom:12px}
+.nav-link{display:flex;align-items:center;gap:10px;width:100%;min-height:42px;padding:10px 12px;border:0;border-radius:8px;
+  background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.nav-link:hover{background:#ffffff14}
+.nav-link.on{background:var(--acc);color:#2a1d05;font-weight:600}
+.nav-link:focus-visible,.sub:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.label{flex:1;min-width:0}
+.chevron{margin-left:auto;opacity:.7;transition:transform .15s}
+.nav-group.active>.parent{background:#ffffff1f;box-shadow:inset 3px 0 0 var(--acc)}
+.nav-group.open>.parent{background:#ffffff14}
+.nav-group.open .chevron{transform:rotate(90deg)}
+
+/* ---- sub menu: opens in place (phones, tablets, touch) ---- */
+.submenu{list-style:none;margin:2px 0 6px 20px;padding:0 0 0 12px;border-left:1px solid #ffffff2e;display:flex;flex-direction:column;gap:2px}
+.sub{display:block;padding:9px 10px;border-radius:6px;color:#d4e3e0;font-size:.92rem}
+a.sub:hover{background:#ffffff14}
+a.sub.on{background:var(--acc);color:#2a1d05;font-weight:600}
+.sub.soon{display:flex;justify-content:space-between;align-items:center;gap:8px;opacity:.5;cursor:not-allowed}
+.sub.soon em{font-style:normal;font-size:.65rem;padding:1px 6px;border:1px solid #ffffff59;border-radius:99px}
+
+/* ---- footer of the sidebar ---- */
+.me{margin-top:auto;padding:10px 6px 0;border-top:1px solid #ffffff1f;display:flex;flex-direction:column;gap:8px;font-size:.85rem}
+.who small{display:block;color:#9fb8b4}
+.me .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+
+/* ---- page area ---- */
+main{flex:1;min-width:0;padding:20px}
+.content{max-width:1400px;margin:0 auto}
+.topbar,.scrim{display:none}
+
+/* ---- sub menu flies out on hover (real mouse, wide and tall screens) ---- */
+@media (hover:hover) and (pointer:fine) and (min-width:861px) and (min-height:600px){
+  aside{overflow:visible}
+  .nav-group{position:relative}
+  .nav-group.open .chevron{transform:none}
+  .submenu{position:absolute;left:calc(100% + 18px);top:-6px;min-width:220px;margin:0;padding:8px;
+    border:1px solid #ffffff2e;border-radius:10px;background:#18424b;box-shadow:0 12px 28px #0006;z-index:40}
+  .submenu::before{content:'';position:absolute;left:-20px;top:0;bottom:0;width:20px} /* keeps the hover when the mouse crosses the gap */
+}
+
+/* ---- phones and small tablets: the sidebar becomes a slide-in drawer ---- */
+@media (max-width:860px){
+  aside{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);transform:translateX(-100%);visibility:hidden;z-index:50;
+    box-shadow:0 0 30px #0008;transition:transform .2s,visibility 0s .2s}
+  aside.drawer-open{transform:none;visibility:visible;transition:transform .2s}
+  .scrim{display:block;position:fixed;inset:0;background:#0007;z-index:40}
+  main{padding:16px}
+  .topbar{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:20;margin:-16px -16px 12px;
+    padding:max(8px,env(safe-area-inset-top)) 16px 8px;background:var(--bg);border-bottom:1px solid var(--line)}
+  .topbar .logo{width:30px;height:30px}
+  .burger{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:0;border-radius:8px;
+    background:var(--side);color:#fff;cursor:pointer}
+}
+@media (max-width:480px){
+  main{padding:12px}
+  .topbar{margin:-12px -12px 12px;padding-left:12px;padding-right:12px}
+}
+.banner{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px;padding:10px 12px;border:1px solid #e3b4ae;border-radius:8px;background:#fbe9e6;color:#7a2318}

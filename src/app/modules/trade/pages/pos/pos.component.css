@@ -1,0 +1,13 @@
+.pos{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:left;font:inherit;cursor:pointer}
+.tile:hover:not(:disabled){border-color:var(--acc)}
+.tile:disabled{opacity:.45}
+.tile b{display:block}
+.sku{color:var(--mut)}
+.cart{position:sticky;top:16px}
+.name{flex:1}
+.empty{color:var(--mut)}
+.total{font-size:1.4rem;font-weight:700;display:flex;justify-content:space-between;margin:12px 0}
+.full{width:100%}
+@media(max-width:860px){.pos{grid-template-columns:1fr}.cart{position:static}}

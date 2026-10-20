@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="POS System logo">
+  <circle cx="32" cy="32" r="32" fill="#E9A23B"/>
+  <path d="M32 13 L49 22.5 V41.5 L32 51 L15 41.5 V22.5 Z" fill="#12343B"/>
+  <path d="M15 22.5 L32 32 L49 22.5" fill="none" stroke="#E9A23B" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M32 32 V51" stroke="#E9A23B" stroke-width="2.4"/>
+  <rect x="9" y="29.5" width="46" height="3.4" rx="1.7" fill="#FFFFFF" opacity="0.92"/>
+</svg>

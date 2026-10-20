@@ -1,0 +1,76 @@
+<div class="grid">
+  @if (searchable) {
+    <div class="grid-toolbar">
+      <input type="search" class="grid-search" [placeholder]="searchPlaceholder" aria-label="Search the table"
+             [ngModel]="query()" (ngModelChange)="search($event)">
+      <span class="grid-count">{{ sorted().length }} {{ sorted().length === 1 ? 'row' : 'rows' }}</span>
+    </div>
+  }
+
+  <div class="grid-wrap">
+    <table>
+      <thead>
+        <tr>
+          @for (c of cols(); track c.key) {
+            <th [class.hide-sm]="c.hideOnSmall" [style.text-align]="c.align ?? 'left'" [style.width]="c.width ?? null" [attr.aria-sort]="ariaSort(c)">
+              @if (c.sortable === false) {
+                {{ c.label }}
+              } @else {
+                <button type="button" class="sort" (click)="sortBy(c)">
+                  {{ c.label }} <span class="arrow" [class.on]="sortKey() === c.key" aria-hidden="true">{{ arrow(c) }}</span>
+                </button>
+              }
+            </th>
+          }
+          @if (actions) { <th class="actions-col"><span class="visually-hidden">Actions</span></th> }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of pageRows(); track row.id ?? $index) {
+          <tr>
+            @for (c of cols(); track c.key) {
+              <td [class.hide-sm]="c.hideOnSmall" [class.wrap]="c.wrap" [style.text-align]="c.align ?? 'left'">
+                @if (cellTemplate(c.key); as template) {
+                  <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ $implicit: row }" />
+                } @else {
+                  @switch (c.type) {
+                    @case ('currency') { {{ row[c.key] | currency:'INR':'symbol':'1.0-2' }} }
+                    @case ('number') { {{ row[c.key] | number }} }
+                    @case ('date') { {{ row[c.key] | date:'mediumDate' }} }
+                    @case ('datetime') { {{ row[c.key] | date:'medium' }} }
+                    @default { {{ row[c.key] }} }
+                  }
+                }
+              </td>
+            }
+            @if (actions) {
+              <td class="actions-col">
+                <div class="row-actions"><ng-container [ngTemplateOutlet]="actions.template" [ngTemplateOutletContext]="{ $implicit: row }" /></div>
+              </td>
+            }
+          </tr>
+        } @empty {
+          <tr><td class="empty" [attr.colspan]="cols().length + (actions ? 1 : 0)">{{ loading ? 'Loading…' : emptyText }}</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (sorted().length > 0) {
+    <div class="grid-footer">
+      <span>{{ rangeText() }}</span>
+      <label class="size">Rows
+        <select [ngModel]="size()" (ngModelChange)="setSize($event)">
+          @for (s of pageSizes; track s) { <option [ngValue]="s">{{ s }}</option> }
+        </select>
+      </label>
+      @if (pageCount() > 1) {
+        <div class="pager">
+          <button type="button" class="btn alt sm" [disabled]="currentPage() <= 1" (click)="go(currentPage() - 1)">Prev</button>
+          <span>Page {{ currentPage() }} of {{ pageCount() }}</span>
+          <button type="button" class="btn alt sm" [disabled]="currentPage() >= pageCount()" (click)="go(currentPage() + 1)">Next</button>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,9 @@
+h2{font-size:1.1rem;margin:0}
+.perm-head{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;margin:16px 0 8px}
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+fieldset{border:1px solid var(--line);border-radius:10px;margin:0;padding:8px 12px}
+legend{font-weight:600;padding:0 6px}
+.check{display:flex;gap:8px;align-items:flex-start;padding:6px 0;cursor:pointer}
+.check input{margin-top:3px}
+.check small{display:block;color:var(--mut)}
+.actions{margin-top:16px}

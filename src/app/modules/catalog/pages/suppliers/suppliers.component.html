@@ -1,0 +1,35 @@
+<app-page-header>
+  <button class="btn pri" (click)="newSupplier()">Add supplier</button>
+</app-page-header>
+<app-notice [message]="message()" />
+
+@if (form(); as m) {
+  <form class="card form" (ngSubmit)="save()">
+    <label>Name<input name="name" [(ngModel)]="m.name" required></label>
+    <label>Phone<input name="phone" [(ngModel)]="m.phone"></label>
+    <label>Email<input name="email" type="email" [(ngModel)]="m.email"></label>
+    <div class="row">
+      <button class="btn pri">Save supplier</button>
+      <button type="button" class="btn alt" (click)="form.set(null)">Cancel</button>
+    </div>
+  </form>
+}
+
+<div class="card tbl">
+  <table>
+    <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th></th></tr></thead>
+    <tbody>
+      @for (s of suppliers(); track s.id) {
+        <tr>
+          <td>{{ s.name }}</td><td>{{ s.phone }}</td><td>{{ s.email }}</td>
+          <td class="r">
+            <button class="btn alt sm" (click)="edit(s)">Edit</button>
+            <button class="btn bad sm" (click)="remove(s)">Remove</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="4">No suppliers yet.</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

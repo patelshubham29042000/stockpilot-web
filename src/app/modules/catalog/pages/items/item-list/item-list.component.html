@@ -1,0 +1,41 @@
+<app-page-header>
+  <input placeholder="Search name or SKU" [(ngModel)]="search" (input)="load()">
+  <label class="row"><input type="checkbox" [(ngModel)]="lowOnly" (change)="load()"> Low stock only</label>
+  @if (auth.can(PERM.itemsManage)) {
+    <a class="btn pri" routerLink="/items/new">Add item</a>
+    <label class="btn alt">Import CSV<input type="file" accept=".csv" hidden (change)="import($event)"></label>
+    <button class="btn alt" (click)="exportCsv()">Export CSV</button>
+  }
+</app-page-header>
+@if (auth.can(PERM.itemsManage)) {
+  <p class="hint">CSV columns: sku, name, category, price, cost, qty, reorder. The qty is added to current stock.</p>
+}
+<app-notice [message]="message()" />
+
+<div class="card tbl">
+  <table>
+    <thead>
+      <tr><th>SKU</th><th>Name</th><th class="hide-sm">Category</th><th class="r">Price</th><th class="r hide-sm">Cost</th><th class="r">Stock</th><th></th></tr>
+    </thead>
+    <tbody>
+      @for (i of rows(); track i.id) {
+        <tr [style.opacity]="i.isActive ? 1 : .45">
+          <td>{{ i.sku }}</td>
+          <td class="wrap">{{ i.name }}</td>
+          <td class="hide-sm">{{ i.category }}</td>
+          <td class="r">{{ i.price | currency:'INR' }}</td>
+          <td class="r hide-sm">{{ i.cost | currency:'INR' }}</td>
+          <td class="r"><span class="badge" [class.low]="i.stock <= i.reorderLevel" [class.ok]="i.stock > i.reorderLevel">{{ i.stock }}</span></td>
+          <td class="r">
+            @if (auth.can(PERM.itemsManage)) {
+              <a class="btn alt sm" [routerLink]="['/items', i.id, 'edit']">Edit</a>
+              @if (i.isActive) { <button class="btn bad sm" (click)="deactivate(i)">Deactivate</button> }
+            }
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="7">No items yet.</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

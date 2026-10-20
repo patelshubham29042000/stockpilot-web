@@ -1,0 +1,30 @@
+<app-page-header>
+  <input placeholder="Search name or username" [ngModel]="search()" (ngModelChange)="search.set($event)">
+  <label class="row"><input type="checkbox" [ngModel]="pendingOnly()" (ngModelChange)="pendingOnly.set($event)"> Pending only</label>
+  <a class="btn pri" routerLink="/users/new">Add user</a>
+</app-page-header>
+@if (pending() > 0) {
+  <p class="note">{{ pending() }} account(s) are waiting for activation. Open Edit, choose a role and switch Active on.</p>
+}
+
+<div class="card tbl">
+  <table>
+    <thead>
+      <tr><th>Username</th><th>Name</th><th>Role</th><th>Status</th><th class="hide-sm">Created</th><th></th></tr>
+    </thead>
+    <tbody>
+      @for (u of shown(); track u.id) {
+        <tr>
+          <td>{{ u.username }}</td>
+          <td>{{ u.fullName }}</td>
+          <td>{{ u.roleName ?? '—' }}</td>
+          <td><span class="badge" [class.ok]="u.isActive" [class.warn]="!u.isActive">{{ u.isActive ? 'Active' : 'Pending' }}</span></td>
+          <td class="hide-sm">{{ u.createdAt | date:'mediumDate' }}</td>
+          <td class="r"><a class="btn alt sm" [routerLink]="['/users', u.id, 'edit']">Edit</a></td>
+        </tr>
+      } @empty {
+        <tr><td colspan="6">No users match.</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

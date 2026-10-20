@@ -1,0 +1,43 @@
+<app-page-header [subtitle]="id ? 'Edit role' : 'New role'">
+  <a class="btn alt" routerLink="/roles">Back to roles</a>
+</app-page-header>
+<app-notice [message]="error()" />
+@if (system()) {
+  <p class="note">The Admin role is built in. It always has every permission and cannot be changed.</p>
+}
+
+<form class="card" (ngSubmit)="save()">
+  <div class="form">
+    <label>Role name<input name="name" [(ngModel)]="name" [disabled]="system()" required minlength="2"></label>
+    <label>Description<input name="description" [(ngModel)]="description" [disabled]="system()"></label>
+  </div>
+
+  <div class="perm-head">
+    <h2>Permissions <span class="muted">({{ selected().length }} selected)</span></h2>
+    @if (!system()) {
+      <div class="row">
+        <button type="button" class="btn alt sm" (click)="selectAll()">Select all</button>
+        <button type="button" class="btn alt sm" (click)="clearAll()">Clear</button>
+      </div>
+    }
+  </div>
+
+  <div class="groups">
+    @for (g of groups(); track g.name) {
+      <fieldset>
+        <legend>{{ g.name }}</legend>
+        @for (p of g.items; track p.key) {
+          <label class="check">
+            <input type="checkbox" [checked]="has(p.key)" [disabled]="system()" (change)="toggle(p.key, $any($event.target).checked)">
+            <span>{{ p.label }}<small>{{ p.key }}</small></span>
+          </label>
+        }
+      </fieldset>
+    }
+  </div>
+
+  <div class="row actions">
+    <button class="btn pri" [disabled]="busy() || system()">Save role</button>
+    <a class="btn alt" routerLink="/roles">Cancel</a>
+  </div>
+</form>

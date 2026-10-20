@@ -1,0 +1,21 @@
+<div class="auth-page">
+  <div class="card auth-card">
+    <img class="auth-logo" src="logo.svg" alt="" width="56" height="56">
+    <h1>{{ brand.appName }}</h1>
+    <p class="hint">Create your account</p>
+    @if (result(); as r) {
+      <p class="note">{{ r.message }}</p>
+      <a routerLink="/login" class="btn pri">Go to sign in</a>
+    } @else {
+      <form class="fields" (ngSubmit)="submit()">
+        <input name="fullName" placeholder="Full name" [(ngModel)]="fullName" required>
+        <input name="username" placeholder="Username (3+ characters)" autocomplete="username" [(ngModel)]="username" required minlength="3">
+        <input name="password" type="password" placeholder="Password (8+ characters)" autocomplete="new-password" [(ngModel)]="password" required minlength="8">
+        <input name="confirm" type="password" placeholder="Repeat password" autocomplete="new-password" [(ngModel)]="confirm" required>
+        @if (error()) { <span class="err">{{ error() }}</span> }
+        <button class="btn pri" [disabled]="busy()">Create account</button>
+      </form>
+      <p class="hint">Already have an account? <a routerLink="/login" class="link">Sign in</a></p>
+    }
+  </div>
+</div>

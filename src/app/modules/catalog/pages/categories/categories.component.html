@@ -1,0 +1,35 @@
+<app-page-header>
+  <button class="btn pri" (click)="add()">Add category</button>
+</app-page-header>
+<p class="hint">Categories group your items. You pick one when you add or edit an item.</p>
+<app-notice [message]="message()" />
+
+@if (form(); as m) {
+  <form class="card form" (ngSubmit)="save()">
+    <label>Category name<input name="name" [(ngModel)]="m.name" required minlength="2"></label>
+    <div class="row">
+      <button class="btn pri">{{ m.id ? 'Save changes' : 'Add category' }}</button>
+      <button type="button" class="btn alt" (click)="form.set(null)">Cancel</button>
+    </div>
+  </form>
+}
+
+<div class="card tbl">
+  <table>
+    <thead><tr><th>Category</th><th class="r">Items</th><th></th></tr></thead>
+    <tbody>
+      @for (c of categories(); track c.id) {
+        <tr>
+          <td>{{ c.name }}</td>
+          <td class="r">{{ c.itemCount }}</td>
+          <td class="r">
+            <button class="btn alt sm" (click)="edit(c)">Edit</button>
+            <button class="btn bad sm" [disabled]="c.itemCount > 0" [title]="c.itemCount > 0 ? 'Move its items to another category first' : ''" (click)="remove(c)">Delete</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="3">No categories yet. Add your first one.</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

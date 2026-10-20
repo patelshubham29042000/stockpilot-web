@@ -1,0 +1,40 @@
+<app-page-header>
+  @if (auth.can(PERM.salesReport)) {
+    <button class="btn alt" (click)="exportSales()">Download sales report</button>
+  }
+</app-page-header>
+
+@if (data(); as x) {
+  <div class="stats">
+    <div class="stat"><b>{{ x.todaySales | currency:'INR':'symbol':'1.0-0' }}</b><span>Sales today ({{ x.todayCount }} bills)</span></div>
+    <div class="stat"><b>{{ x.items }}</b><span>Active items</span></div>
+    <div class="stat" [class.warn]="x.lowStock > 0"><b>{{ x.lowStock }}</b><span>Items to reorder</span></div>
+    <div class="stat"><b>{{ x.stockValue | currency:'INR':'symbol':'1.0-0' }}</b><span>Stock value at cost</span></div>
+  </div>
+
+  <div class="card">
+    <b>Last 7 days</b>
+    <div class="chart">
+      @for (s of x.last7; track s.date) {
+        <div><i [style.height.%]="barHeight(s.total)"></i>{{ s.date | date:'EEE' }}</div>
+      }
+    </div>
+  </div>
+
+  <div class="card tbl">
+    <div class="card-head">
+      <b>Running low</b>
+      @if (auth.can(PERM.purchaseOrdersManage)) { <a routerLink="/purchase-orders" class="btn sm pri">Create purchase orders</a> }
+    </div>
+    <table>
+      <thead><tr><th>SKU</th><th>Item</th><th class="r">In stock</th><th class="r">Reorder at</th></tr></thead>
+      <tbody>
+        @for (i of x.low; track i.id) {
+          <tr><td>{{ i.sku }}</td><td class="wrap">{{ i.name }}</td><td class="r"><span class="badge low">{{ i.stock }}</span></td><td class="r">{{ i.reorderLevel }}</td></tr>
+        } @empty {
+          <tr><td colspan="4">All items are above their reorder level.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

@@ -1,0 +1,9 @@
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;border-left:5px solid var(--acc)}
+.stat b{display:block;font-size:1.5rem}
+.stat span{color:var(--mut);font-size:.85rem}
+.stat.warn{border-left-color:var(--bad)}
+.chart{display:flex;gap:10px;align-items:flex-end;height:150px;margin-top:12px}
+.chart div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:.75rem;color:var(--mut)}
+.chart i{display:block;width:100%;background:var(--acc);border-radius:4px 4px 0 0;min-height:2px}
+.card-head{padding:14px 16px;display:flex;justify-content:space-between;align-items:center}

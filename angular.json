@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "inventory-ui": {
+    "stockpilot-web": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -39,7 +39,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/inventory-ui",
+            "outputPath": "dist/stockpilot-web",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -86,13 +86,16 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "inventory-ui:build:production"
+              "buildTarget": "stockpilot-web:build:production"
             },
             "development": {
-              "buildTarget": "inventory-ui:build:development"
+              "buildTarget": "stockpilot-web:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"

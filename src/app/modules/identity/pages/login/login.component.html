@@ -1,0 +1,12 @@
+<div class="auth-page">
+  <form class="card auth-card" (ngSubmit)="submit()">
+    <img class="auth-logo" src="logo.svg" alt="" width="56" height="56">
+    <h1>{{ brand.appName }}</h1>
+    <p class="hint">{{ brand.tagline }}</p>
+    <input name="username" placeholder="Username" autocomplete="username" [(ngModel)]="username" required>
+    <input name="password" type="password" placeholder="Password" autocomplete="current-password" [(ngModel)]="password" required>
+    @if (error()) { <span class="err">{{ error() }}</span> }
+    <button class="btn pri" [disabled]="busy()">Sign in</button>
+    <p class="hint">New here? <a routerLink="/register" class="link">Create an account</a></p>
+  </form>
+</div>

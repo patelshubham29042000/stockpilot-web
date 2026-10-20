@@ -1,0 +1,29 @@
+<app-page-header [subtitle]="id ? 'Edit user' : 'New user'">
+  <a class="btn alt" routerLink="/users">Back to users</a>
+</app-page-header>
+<app-notice [message]="error()" />
+@if (id && !isActive) {
+  <p class="note">This account cannot sign in yet. Choose a role and switch Active on.</p>
+}
+
+<form class="card form" (ngSubmit)="save()">
+  <label>Username<input name="username" [(ngModel)]="username" [disabled]="!!id" required minlength="3"></label>
+  <label>Full name<input name="fullName" [(ngModel)]="fullName" required></label>
+  <label>{{ id ? 'New password (leave empty to keep)' : 'Password (8+ characters)' }}
+    <input name="password" type="password" autocomplete="new-password" [(ngModel)]="password" [required]="!id" minlength="8">
+  </label>
+  <label>Role
+    <select name="role" [ngModel]="roleId" (ngModelChange)="onRoleChange($event)">
+      <option [ngValue]="null">No role</option>
+      @for (r of roles(); track r.id) { <option [ngValue]="r.id">{{ r.name }}</option> }
+    </select>
+  </label>
+  <label class="switch">
+    <input name="isActive" type="checkbox" [(ngModel)]="isActive" [disabled]="roleId === null">
+    <span>Active (can sign in)</span>
+  </label>
+  <div class="row">
+    <button class="btn pri" [disabled]="busy()">Save user</button>
+    <a class="btn alt" routerLink="/users">Cancel</a>
+  </div>
+</form>

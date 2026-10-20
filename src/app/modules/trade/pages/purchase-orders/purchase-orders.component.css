@@ -1,0 +1,4 @@
+.po-head{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:8px}
+.line-row{margin-top:8px}
+.actions-row{margin-top:12px}
+.narrow{width:100px}

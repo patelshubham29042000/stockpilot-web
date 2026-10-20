@@ -1,0 +1,18 @@
+<app-page-header>
+  @if (auth.can(PERM.rolesManage)) { <a class="btn pri" routerLink="/roles/new">New role</a> }
+</app-page-header>
+<p class="hint">A role is a set of permissions. Give a user a role to control what they can see and do.</p>
+<app-notice [message]="message()" />
+
+<app-data-grid [columns]="columns" [rows]="rows()" [loading]="loading()"
+               searchPlaceholder="Search roles…" emptyText="No roles yet. Create one, for example Manager or Cashier.">
+  <ng-template gridCell="name" let-row>
+    {{ row.name }} @if (row.isSystem) { <span class="badge">Built-in</span> }
+  </ng-template>
+  <ng-template gridActions let-row>
+    @if (!row.isSystem && auth.can(PERM.rolesManage)) {
+      <a class="btn alt sm" [routerLink]="['/roles', row.id, 'edit']">Edit</a>
+      <button type="button" class="btn bad sm" (click)="remove(row)">Delete</button>
+    }
+  </ng-template>
+</app-data-grid>

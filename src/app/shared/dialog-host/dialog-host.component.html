@@ -1,0 +1,28 @@
+<dialog #box class="dlg" aria-labelledby="dlg-title" aria-describedby="dlg-message" (cancel)="onCancel($event)">
+  @if (state(); as s) {
+    <div class="panel" [class.success]="s.kind === 'success'" [class.error]="s.kind === 'error'">
+      <header>
+        <img src="logo.svg" alt="" width="26" height="26">
+        <h2 id="dlg-title">{{ s.title }}</h2>
+      </header>
+
+      <div class="body" [attr.role]="s.kind === 'error' ? 'alert' : null">
+        <span class="mark" aria-hidden="true">{{ mark(s.kind) }}</span>
+        <div>
+          <strong class="status">{{ statusText(s.kind) }}</strong>
+          <p id="dlg-message">{{ s.message }}</p>
+        </div>
+      </div>
+
+      <footer>
+        @if (s.kind === 'confirm') {
+          <button type="button" class="btn ok" (click)="answer(true)">{{ s.yesText }}</button>
+          <button type="button" class="btn bad" data-focus (click)="answer(false)">{{ s.noText }}</button>
+        } @else {
+          <button type="button" class="btn" [class.ok]="s.kind === 'success'" [class.bad]="s.kind === 'error'"
+                  data-focus (click)="answer(true)">{{ s.okText }}</button>
+        }
+      </footer>
+    </div>
+  }
+</dialog>

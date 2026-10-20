@@ -1,0 +1,48 @@
+<app-page-header>
+  <button class="btn pri" (click)="autoCreate()">Create from low stock</button>
+  <button class="btn alt" (click)="newOrder()">New order</button>
+</app-page-header>
+<app-notice [message]="message()" />
+
+@if (draft(); as d) {
+  <form class="card" (ngSubmit)="save()">
+    <label class="row">Supplier
+      <select name="supplier" [(ngModel)]="d.supplierId" required>
+        @for (s of suppliers(); track s.id) { <option [ngValue]="s.id">{{ s.name }}</option> }
+      </select>
+    </label>
+    @for (l of d.lines; track $index) {
+      <div class="row line-row">
+        <select [name]="'item' + $index" [ngModel]="l.itemId" (ngModelChange)="pickItem(l, $event)" required>
+          <option [ngValue]="null">Choose item</option>
+          @for (i of items(); track i.id) { <option [ngValue]="i.id">{{ i.name }}</option> }
+        </select>
+        <input [name]="'qty' + $index" type="number" min="1" class="narrow" [(ngModel)]="l.qty" aria-label="Quantity">
+        <input [name]="'cost' + $index" type="number" min="0" step="0.01" class="narrow" [(ngModel)]="l.unitCost" aria-label="Unit cost">
+        <button type="button" class="btn alt sm" (click)="removeLine(d, $index)">Remove</button>
+      </div>
+    }
+    <div class="row actions-row">
+      <button type="button" class="btn alt" (click)="addLine(d)">Add line</button>
+      <button class="btn pri">Save order</button>
+      <button type="button" class="btn alt" (click)="draft.set(null)">Cancel</button>
+    </div>
+  </form>
+}
+
+@for (o of orders(); track o.id) {
+  <div class="card">
+    <div class="po-head">
+      <div><b>{{ o.number }}</b> · {{ o.supplier }} · {{ o.createdAt | date:'medium' }}</div>
+      <div class="row">
+        <span class="badge" [class.ok]="o.status === 'Received'">{{ o.status }}</span>
+        @if (o.status === 'Draft') { <button class="btn sm pri" (click)="receive(o)">Mark received</button> }
+      </div>
+    </div>
+    @for (l of o.lines; track l.itemId) {
+      <div class="line"><span>{{ l.item }}</span><span>{{ l.qty }} × ₹{{ l.unitCost }}</span></div>
+    }
+  </div>
+} @empty {
+  <p>No purchase orders yet.</p>
+}

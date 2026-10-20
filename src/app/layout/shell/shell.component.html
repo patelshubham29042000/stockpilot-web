@@ -1,0 +1,66 @@
+<div class="shell">
+  <aside id="main-menu" [class.drawer-open]="drawerOpen()">
+    <div class="brand">
+      <img class="logo" src="logo.svg" alt="" width="42" height="42">
+      <div>
+        <h2>{{ brand.appName }}</h2>
+        <p class="tagline">{{ brand.tagline }}</p>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Main menu">
+      @for (link of topLinks(); track link.path) {
+        <a class="nav-link" [routerLink]="link.path" routerLinkActive="on" (click)="go()">
+          <app-icon [name]="link.icon" /><span class="label">{{ link.label }}</span>
+        </a>
+      }
+
+      @for (group of groups(); track group.id) {
+        <div class="nav-group" [class.open]="openGroup() === group.id" [class.active]="activeGroup() === group.id"
+             (mouseenter)="onEnter(group.id)" (mouseleave)="onLeave()">
+          <button type="button" class="nav-link parent" aria-haspopup="true"
+                  [attr.aria-expanded]="openGroup() === group.id" (click)="toggle(group.id)">
+            <app-icon [name]="group.icon" /><span class="label">{{ group.label }}</span>
+            <app-icon class="chevron" name="chevron" [size]="16" />
+          </button>
+
+          @if (openGroup() === group.id) {
+            <ul class="submenu">
+              @for (item of group.items; track item.path) {
+                <li>
+                  @if (item.soon) {
+                    <span class="sub soon" aria-disabled="true">{{ item.label }} <em>Soon</em></span>
+                  } @else {
+                    <a class="sub" [routerLink]="item.path" routerLinkActive="on" (click)="go()">{{ item.label }}</a>
+                  }
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      }
+    </nav>
+
+    <div class="me">
+      <span class="who">{{ auth.name() }} <small>{{ auth.role() }}</small></span>
+      <button class="btn alt sm" type="button" (click)="auth.logout()"><app-icon name="logout" [size]="16" /> Log out</button>
+    </div>
+  </aside>
+
+  @if (drawerOpen()) { <div class="scrim" (click)="drawerOpen.set(false)"></div> }
+
+  <main>
+    <header class="topbar">
+      <button class="burger" type="button" aria-label="Open menu" aria-controls="main-menu"
+              [attr.aria-expanded]="drawerOpen()" (click)="drawerOpen.set(true)"><app-icon name="menu" /></button>
+      <img class="logo" src="logo.svg" alt="" width="30" height="30">
+      <strong>{{ brand.appName }}</strong>
+    </header>
+    <div class="content">
+      @if (notify.message(); as text) {
+        <div class="banner" role="alert"><span>{{ text }}</span><button type="button" class="btn alt sm" (click)="notify.clear()">Dismiss</button></div>
+      }
+      <router-outlet />
+    </div>
+  </main>
+</div>
