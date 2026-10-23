@@ -1,0 +1,9 @@
+.po-top{display:grid;grid-template-columns:minmax(200px,280px) 1fr auto;gap:12px;align-items:end}
+.po-top label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--mut)}
+.scan input{width:100%}
+.po-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.po-info .label,.totals .label{display:block;font-size:.8rem;color:var(--mut)}
+.totals{display:flex;flex-wrap:wrap;gap:12px 32px;margin-bottom:12px}
+.totals strong{font-size:1.25rem}
+.actions{margin-bottom:16px}
+@media(max-width:700px){.po-top{grid-template-columns:1fr}.po-top .btn{width:100%}}

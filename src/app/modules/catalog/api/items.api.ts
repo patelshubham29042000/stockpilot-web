@@ -8,6 +8,8 @@ export class ItemsApi {
   private api = inject(ApiService);
 
   list(search = '', lowOnly = false) { return this.api.get<Item[]>(CATALOG_API.items, { q: search, lowOnly }); }
+  /** Finds one active item by the code a barcode scanner reads (its SKU). */
+  byCode(code: string) { return this.api.get<Item>(`${CATALOG_API.items}/by-code`, { code }); }
   get(id: number) { return this.api.get<Item>(`${CATALOG_API.items}/${id}`); }
   create(input: ItemInput) { return this.api.post<number>(CATALOG_API.items, input); }
   update(id: number, input: ItemInput) { return this.api.put<void>(`${CATALOG_API.items}/${id}`, input); }

@@ -1,1 +1,5 @@
-/* Item list: uses the shared look from src/styles.scss. Put page-only styles here. */
+.list-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:10px}
+.list-bar input[type=search]{flex:1;min-width:180px;max-width:360px}
+.check{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.count{margin-left:auto;color:var(--mut);font-size:.85rem}
+@media(max-width:480px){.list-bar input[type=search]{max-width:none}.count{margin-left:0}}

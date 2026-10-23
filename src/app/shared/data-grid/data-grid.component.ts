@@ -83,4 +83,9 @@ export class DataGridComponent {
   search(text: string) { this.query.set(text); this.page.set(1); }
   setSize(value: number) { this.size.set(+value); this.page.set(1); }
   go(page: number) { this.page.set(page); }
+
+  trackRow(index: number, row: any): any {
+    return row?.id ?? index;
+  }
+
 }

@@ -6,7 +6,15 @@
 .grid-count{color:var(--mut);font-size:.85rem;white-space:nowrap}
 
 .grid-wrap{overflow:auto;max-height:calc(100vh - 300px);min-height:120px}
-table{width:100%;border-collapse:separate;border-spacing:0}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+th, td {
+  padding: 10px 12px;
+  vertical-align: middle;
+}
 thead th{position:sticky;top:0;z-index:1;padding:10px 14px;background:#f4f7f5;border-bottom:1px solid var(--line);
   font-size:.76rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);white-space:nowrap}
 .sort{display:inline-flex;align-items:center;gap:5px;padding:0;border:0;background:none;color:inherit;font:inherit;
@@ -19,10 +27,18 @@ tbody td{padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowra
 tbody tr:nth-child(even){background:#fafbfa}
 tbody tr:hover{background:#f1f5f3}
 tbody tr:last-child td{border-bottom:0}
-td.wrap{white-space:normal;min-width:180px;max-width:480px;overflow-wrap:anywhere}
+td.wrap {
+  white-space: normal !important;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
 td.empty{padding:28px;text-align:center;color:var(--mut);white-space:normal}
 
-.actions-col{width:1%;white-space:nowrap;text-align:right}
+.actions-col {
+  width: 130px;
+  text-align: right;
+}
 .row-actions{display:inline-flex;gap:6px;justify-content:flex-end}
 
 .grid-footer{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:10px 12px;border-top:1px solid var(--line);font-size:.85rem;color:var(--mut)}

@@ -1,0 +1,7 @@
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;align-items:end}
+.filters label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--mut)}
+.filter-actions{display:flex;gap:8px}
+.list-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.list-bar input{flex:1;min-width:180px;max-width:360px}
+.count{color:var(--mut);font-size:.85rem}
+@media(max-width:480px){.list-bar input{max-width:none}}

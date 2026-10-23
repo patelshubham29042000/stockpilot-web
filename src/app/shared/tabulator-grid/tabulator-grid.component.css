@@ -1,0 +1,25 @@
+/* Tabulator's own theme is loaded in angular.json. These rules match it to the rest of the app. */
+app-tabulator-grid{display:block;margin-bottom:16px}
+.tg .tabulator{border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:.92rem}
+.tg .tabulator .tabulator-header{background:#f4f7f5;border-bottom:1px solid var(--line)}
+.tg .tabulator .tabulator-header .tabulator-col{background:#f4f7f5;border-right:0}
+.tg .tabulator .tabulator-header .tabulator-col .tabulator-col-content{padding:10px 12px}
+.tg .tabulator .tabulator-col-title{font-size:.76rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}
+.tg .tabulator-row{min-height:44px;border-bottom:1px solid var(--line)}
+.tg .tabulator-row.tabulator-row-even{background:#fafbfa}
+.tg .tabulator-cell{padding:10px 12px;border-right:0}
+.tg .tabulator-cell.tabulator-editable{background:#fffdf5;cursor:text}
+.tg .tabulator-cell.tabulator-editing{background:#fff;box-shadow:inset 0 0 0 2px var(--acc)}
+.tg .tabulator-cell.tabulator-validation-fail{box-shadow:inset 0 0 0 2px var(--bad)}
+.tg .tabulator-cell input{width:100%;padding:4px 6px;font:inherit}
+.tg .tabulator-placeholder .tabulator-placeholder-contents{color:var(--mut);font-size:.95rem;font-weight:400}
+.tg .tabulator-row.flash{animation:tg-flash 1s ease-out}
+@keyframes tg-flash{from{background:#ffe9b8}to{background:transparent}}
+.tg .row-remove{width:34px;height:34px;padding:0;border:0;border-radius:8px;background:var(--bad);color:#fff;font-size:1rem;cursor:pointer}
+@media(prefers-reduced-motion:reduce){.tg .tabulator-row.flash{animation:none}}
+.tg .tabulator-footer{background:#f4f7f5;border-top:1px solid var(--line);font-size:.85rem;color:var(--mut)}
+.tg .tabulator-footer .tabulator-page{border-radius:6px;font:inherit}
+.tg .tabulator-footer .tabulator-page.active{background:var(--side);color:#fff}
+.tg .tabulator-footer .tabulator-page-size{font:inherit;border:1px solid var(--line);border-radius:6px}
+.tg .act{display:flex;gap:6px;justify-content:flex-end;flex-wrap:nowrap}
+@media(max-width:700px){.tg .act .act-wide{display:none}}

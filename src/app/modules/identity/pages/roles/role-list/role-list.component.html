@@ -10,9 +10,9 @@
     {{ row.name }} @if (row.isSystem) { <span class="badge">Built-in</span> }
   </ng-template>
   <ng-template gridActions let-row>
-    @if (!row.isSystem && auth.can(PERM.rolesManage)) {
+    @if (auth.can(PERM.rolesManage)) {
       <a class="btn alt sm" [routerLink]="['/roles', row.id, 'edit']">Edit</a>
-      <button type="button" class="btn bad sm" (click)="remove(row)">Delete</button>
+      @if (!row.isSystem) { <button type="button" class="btn bad sm" (click)="remove(row)">Delete</button> }
     }
   </ng-template>
 </app-data-grid>

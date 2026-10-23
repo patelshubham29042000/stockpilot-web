@@ -1,43 +1,77 @@
 <app-page-header [subtitle]="id ? 'Edit role' : 'New role'">
   <a class="btn alt" routerLink="/roles">Back to roles</a>
 </app-page-header>
-<app-notice [message]="error()" />
 @if (system()) {
-  <p class="note">The Admin role is built in. It always has every permission and cannot be changed.</p>
+  <p class="note">This is the built-in Admin role. It cannot be deleted, and Users and User Roles stay ticked so nobody can lock everyone out. Everything else can be changed.</p>
 }
 
 <form class="card" (ngSubmit)="save()">
   <div class="form">
-    <label>Role name<input name="name" [(ngModel)]="name" [disabled]="system()" required minlength="2"></label>
-    <label>Description<input name="description" [(ngModel)]="description" [disabled]="system()"></label>
+    <label>Role name<input name="name" [(ngModel)]="name" required minlength="2"></label>
+    <label>Description<input name="description" [(ngModel)]="description"></label>
   </div>
 
   <div class="perm-head">
-    <h2>Permissions <span class="muted">({{ selected().length }} selected)</span></h2>
-    @if (!system()) {
-      <div class="row">
-        <button type="button" class="btn alt sm" (click)="selectAll()">Select all</button>
-        <button type="button" class="btn alt sm" (click)="clearAll()">Clear</button>
-      </div>
-    }
+    <h2>Permissions <span class="muted">({{ selected().length }} of {{ totalCount() }} selected)</span></h2>
+    <div class="row">
+      <button type="button" class="btn alt sm" (click)="selectAll()">Select all</button>
+      <button type="button" class="btn alt sm" (click)="clearAll()">Clear</button>
+    </div>
   </div>
+  <p class="hint">This follows the sidebar menu. Tick a menu to give all its pages, or tick single pages.</p>
 
-  <div class="groups">
-    @for (g of groups(); track g.name) {
-      <fieldset>
-        <legend>{{ g.name }}</legend>
-        @for (p of g.items; track p.key) {
-          <label class="check">
-            <input type="checkbox" [checked]="has(p.key)" [disabled]="system()" (change)="toggle(p.key, $any($event.target).checked)">
-            <span>{{ p.label }}<small>{{ p.key }}</small></span>
+  <div class="tree">
+    @for (parent of tree; track parent.id) {
+      <section class="parent" [class.on]="countOn(parent) > 0">
+        <div class="parent-row">
+          <button type="button" class="fold" [attr.aria-expanded]="isOpen(parent)"
+                  [attr.aria-label]="(isOpen(parent) ? 'Fold ' : 'Unfold ') + parent.label" (click)="fold(parent)">
+            <app-icon name="chevron" [size]="16" [class.open]="isOpen(parent)" />
+          </button>
+          <label class="parent-label">
+            <input type="checkbox" [checked]="allOn(parent)" [indeterminate]="someOn(parent)"
+                   (change)="toggleParent(parent, $any($event.target).checked)">
+            <app-icon [name]="parent.icon" [size]="18" />
+            <strong>{{ parent.label }}</strong>
           </label>
+          <span class="count">{{ countOn(parent) }}/{{ parent.children.length }}</span>
+        </div>
+
+        @if (isOpen(parent)) {
+          <ul class="children">
+            @for (child of parent.children; track child.key) {
+              <li>
+                <label class="child">
+                  <input type="checkbox" [checked]="has(child.key)" [disabled]="isLocked(child.key)"
+                         (change)="toggle(child.key, $any($event.target).checked)">
+                  <span>{{ child.label }}<small>{{ child.hint }}</small></span>
+                </label>
+              </li>
+            }
+          </ul>
         }
-      </fieldset>
+      </section>
+    }
+
+    @if (others().length > 0) {
+      <section class="parent" [class.on]="true">
+        <div class="parent-row"><strong class="other-title">Other permissions</strong></div>
+        <ul class="children flat">
+          @for (p of others(); track p.key) {
+            <li>
+              <label class="child">
+                <input type="checkbox" [checked]="has(p.key)" (change)="toggle(p.key, $any($event.target).checked)">
+                <span>{{ p.label }}<small>{{ p.key }}</small></span>
+              </label>
+            </li>
+          }
+        </ul>
+      </section>
     }
   </div>
 
   <div class="row actions">
-    <button class="btn pri" [disabled]="busy() || system()">Save role</button>
+    <button class="btn pri" [disabled]="busy()">Save role</button>
     <a class="btn alt" routerLink="/roles">Cancel</a>
   </div>
 </form>

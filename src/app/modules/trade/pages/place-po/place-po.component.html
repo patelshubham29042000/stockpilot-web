@@ -1,0 +1,59 @@
+<app-page-header [subtitle]="viewing ? (po()?.number ?? '') : ''">
+  <a class="btn alt" routerLink="/purchase-orders/find">{{ viewing ? 'Back to Find PO' : 'Find PO' }}</a>
+</app-page-header>
+
+@if (viewing) {
+  @if (po(); as p) {
+    <div class="card po-info">
+      <div><span class="label">PO number</span><strong>{{ p.number }}</strong></div>
+      <div><span class="label">Date</span><strong>{{ p.createdAt | date:'medium' }}</strong></div>
+      <div><span class="label">Supplier</span><strong>{{ p.supplier }}</strong></div>
+      <div>
+        <span class="label">Status</span>
+        <span class="badge" [class.warn]="p.status === 'Pending'" [class.ok]="p.status === 'Completed'" [class.low]="p.status === 'Cancelled'">{{ p.status }}</span>
+      </div>
+    </div>
+  }
+} @else {
+  <p class="hint">Choose a supplier, then scan each item's barcode (UPC). Change the quantity and unit cost right in the table.</p>
+  <div class="card po-top">
+    <label>Supplier
+      <select [(ngModel)]="supplierId">
+        <option [ngValue]="null">Choose supplier</option>
+        @for (s of suppliers(); track s.id) { <option [ngValue]="s.id">{{ s.name }}</option> }
+      </select>
+    </label>
+
+    <label class="scan">Scan item / UPC
+      <input #scanBox type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+             placeholder="Scan the barcode, or type the code and press Enter"
+             [(ngModel)]="code" (keydown.enter)="scan(); $event.preventDefault()">
+    </label>
+
+    <button type="button" class="btn alt" (click)="scan()">Add</button>
+  </div>
+}
+
+<app-tabulator-grid [columns]="columns" idField="itemId" [data]="viewRows()"
+                    [placeholder]="viewing ? 'This purchase order has no lines.' : 'No items yet. Scan a barcode above.'"
+                    (changed)="lines.set($event)" />
+
+<div class="card totals">
+  <div><span class="label">Items</span><strong>{{ lines().length }}</strong></div>
+  <div><span class="label">Total quantity</span><strong>{{ totalQty() }}</strong></div>
+  <div><span class="label">Total cost</span><strong>{{ totalCost() | currency:'INR':'symbol':'1.2-2' }}</strong></div>
+</div>
+
+@if (viewing) {
+  @if (po()?.status === 'Pending') {
+    <div class="row actions">
+      <button type="button" class="btn ok" (click)="completePo()">Complete</button>
+      <button type="button" class="btn bad" (click)="cancelPo()">Cancel PO</button>
+    </div>
+  }
+} @else {
+  <div class="row actions">
+    <button type="button" class="btn ok" [disabled]="busy()" (click)="save()">Save purchase order</button>
+    <button type="button" class="btn alt" [disabled]="busy() || lines().length === 0" (click)="clearAll()">Clear</button>
+  </div>
+}

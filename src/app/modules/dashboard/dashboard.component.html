@@ -24,7 +24,7 @@
   <div class="card tbl">
     <div class="card-head">
       <b>Running low</b>
-      @if (auth.can(PERM.purchaseOrdersManage)) { <a routerLink="/purchase-orders" class="btn sm pri">Create purchase orders</a> }
+      @if (auth.can(PERM.purchaseOrdersManage)) { <a routerLink="/purchase-orders/find" class="btn sm pri">Create purchase orders</a> }
     </div>
     <table>
       <thead><tr><th>SKU</th><th>Item</th><th class="r">In stock</th><th class="r">Reorder at</th></tr></thead>

@@ -27,12 +27,13 @@ export class RoleListComponent {
   loading = signal(true);
 
   readonly columns: GridColumn[] = [
-    { key: 'name', label: 'Role' },
-    { key: 'description', label: 'Description', wrap: true, hideOnSmall: true },
-    { key: 'permissionCount', label: 'Permissions', type: 'number', align: 'right' },
-    { key: 'userCount', label: 'Users', type: 'number', align: 'right' }
-  ];
-  rows = computed(() => this.roles().map(r => ({ ...r, permissionCount: r.permissions.length })));
+  { key: 'name', label: 'Role', width: '22%' },
+  { key: 'description', label: 'Description', wrap: true, hideOnSmall: true, width: '48%' },
+  { key: 'permissionCount', label: 'Permissions', type: 'number', align: 'right', width: '15%' },
+  { key: 'userCount', label: 'Users', type: 'number', align: 'right', width: '15%' }
+];
+
+  rows = computed(() => this.roles().map(r => ({ ...r, permissionCount: r.permissions?.length ?? 0 })));
 
   constructor() { this.load(); }
 
@@ -40,7 +41,7 @@ export class RoleListComponent {
     this.loading.set(true);
     this.rolesApi.list().subscribe({
       next: r => { this.roles.set(r); this.loading.set(false); },
-      error: () => this.loading.set(false)
+      error: e => { this.loading.set(false); this.dialog.error(errMsg(e)); }
     });
   }
 

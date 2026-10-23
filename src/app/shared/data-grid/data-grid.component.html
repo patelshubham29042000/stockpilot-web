@@ -26,11 +26,9 @@
         </tr>
       </thead>
       <tbody>
-        @for (row of pageRows(); track row.id ?? $index) {
-          <tr>
+          @for (row of pageRows(); track trackRow($index, row)) {          <tr>
             @for (c of cols(); track c.key) {
-              <td [class.hide-sm]="c.hideOnSmall" [class.wrap]="c.wrap" [style.text-align]="c.align ?? 'left'">
-                @if (cellTemplate(c.key); as template) {
+              <td [class.hide-sm]="c.hideOnSmall" [class.wrap]="c.wrap" [style.text-align]="c.align ?? 'left'" [style.width]="c.width ?? null">                @if (cellTemplate(c.key); as template) {
                   <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ $implicit: row }" />
                 } @else {
                   @switch (c.type) {

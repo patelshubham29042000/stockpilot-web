@@ -28,9 +28,8 @@ export const NAV_GROUPS: NavGroupDef[] = [
   },
   {
     id: 'purchasing', label: 'Purchase Order', icon: 'purchase', items: [
-      { path: '/purchase-orders/place', label: 'Place PO', permissions: [PERM.purchaseOrdersManage], soon: true },
-      { path: '/purchase-orders/find', label: 'Find PO', permissions: [PERM.purchaseOrdersManage], soon: true },
-      { path: '/purchase-orders', label: 'Purchase orders', permissions: [PERM.purchaseOrdersManage] }
+      { path: '/purchase-orders/place', label: 'Place PO', permissions: [PERM.purchaseOrdersManage] },
+      { path: '/purchase-orders/find', label: 'Find PO', permissions: [PERM.purchaseOrdersManage] },
     ]
   },
   {
