@@ -23,3 +23,9 @@ p{margin:4px 0 0;line-height:1.45;overflow-wrap:anywhere;white-space:pre-line}
 footer{display:flex;justify-content:flex-end;gap:10px;padding:14px 18px 18px}
 footer .btn{min-width:84px}
 @media(max-width:480px){footer{flex-direction:column-reverse}footer .btn{width:100%}}
+.prompt{display:flex;flex-direction:column;gap:4px;margin-top:10px;font-size:.85rem;color:var(--mut)}
+textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;color:var(--ink);resize:vertical}
+.prompt-error{display:block;margin-top:4px;color:var(--bad);font-size:.85rem}
+.prompt{display:flex;flex-direction:column;gap:4px;margin-top:10px;font-size:.85rem;color:var(--mut)}
+textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;color:var(--ink);resize:vertical}
+.prompt-error{display:block;margin-top:4px;color:var(--bad);font-size:.85rem}

@@ -11,11 +11,18 @@
         <div>
           <strong class="status">{{ statusText(s.kind) }}</strong>
           <p id="dlg-message">{{ s.message }}</p>
+          @if (s.kind === 'prompt') {
+            <label class="prompt">{{ s.inputLabel }}
+              <textarea rows="3" data-focus [placeholder]="s.inputPlaceholder ?? ''" [value]="text()"
+                        (input)="text.set($any($event.target).value)"></textarea>
+            </label>
+            @if (promptError()) { <span class="prompt-error">{{ promptError() }}</span> }
+          }
         </div>
       </div>
 
       <footer>
-        @if (s.kind === 'confirm') {
+        @if (s.kind === 'confirm' || s.kind === 'prompt') {
           <button type="button" class="btn ok" (click)="answer(true)">{{ s.yesText }}</button>
           <button type="button" class="btn bad" data-focus (click)="answer(false)">{{ s.noText }}</button>
         } @else {

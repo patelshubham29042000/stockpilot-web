@@ -1,1 +1,1 @@
-/* User list: uses the shared look from src/styles.scss. Put page-only styles here. */
+.check{display:flex;align-items:center;gap:6px;white-space:nowrap}

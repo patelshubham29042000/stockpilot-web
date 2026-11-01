@@ -26,25 +26,11 @@
   </div>
 </form>
 
-@if (error()) { <p class="err" role="alert">{{ error() }}</p> }
-
-<div class="card tbl">
-  <table>
-    <thead>
-      <tr><th>When</th><th>User</th><th class="hide-sm">Module</th><th>Action</th><th>Details</th></tr>
-    </thead>
-    <tbody>
-      @for (r of rows(); track r.source + r.id) {
-        <tr>
-          <td>{{ r.at | date:'medium' }}</td>
-          <td>{{ r.userName }}</td>
-          <td class="hide-sm"><span class="badge">{{ moduleLabel(r.source) }}</span></td>
-          <td>{{ r.entity }} {{ r.action }}</td>
-          <td class="wrap">{{ r.details }}</td>
-        </tr>
-      } @empty {
-        <tr><td colspan="5">{{ loading() ? 'Loading…' : 'Nothing matches these filters.' }}</td></tr>
-      }
-    </tbody>
-  </table>
+<div class="list-bar">
+  <input type="search" placeholder="Search user, action or details…" aria-label="Search the audit log"
+         [ngModel]="search()" (ngModelChange)="search.set($event)">
+  <span class="count">{{ shown().length }} {{ shown().length === 1 ? 'entry' : 'entries' }}</span>
 </div>
+
+<app-tabulator-grid [columns]="columns" idField="rid" [data]="shown()" [pageSize]="25" [responsive]="true" maxHeight="70vh"
+                    placeholder="Nothing matches these filters." />

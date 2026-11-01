@@ -34,21 +34,20 @@ export const NAV_GROUPS: NavGroupDef[] = [
   },
   {
     id: 'sales', label: 'Sale Register', icon: 'sales', items: [
-      { path: '/pos', label: 'Sell (POS)', permissions: [PERM.salesCreate] },
-      { path: '/sales/find', label: 'Find sales', permissions: [PERM.salesReport], soon: true }
+      { path: '/pos', label: 'Sell Screen', permissions: [PERM.salesCreate] },
+      { path: '/sales/find', label: 'Find sales', permissions: [PERM.salesReport] }
     ]
   },
   {
     id: 'users', label: 'User Management', icon: 'users', items: [
-      { path: '/users', label: 'Users', permissions: [PERM.usersManage] },
+      { path: '/users', label: 'Employees', permissions: [PERM.usersManage] },
       { path: '/roles', label: 'User Roles', permissions: [PERM.rolesManage] },
       { path: '/audit', label: 'Audit Logs', permissions: [PERM.auditView] }
     ]
   },
   {
     id: 'maintenance', label: 'Maintenance Tools', icon: 'tools', items: [
-      { path: '/maintenance/data', label: 'Data import / export', permissions: [PERM.itemsManage, PERM.salesReport], soon: true },
-      { path: '/maintenance/status', label: 'System status', permissions: [PERM.usersManage], soon: true }
+      { path: '/customers', label: 'Customers', permissions: [PERM.customersManage] },
     ]
   }
 ];

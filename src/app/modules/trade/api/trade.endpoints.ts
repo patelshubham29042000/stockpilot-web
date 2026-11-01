@@ -4,5 +4,6 @@ export const TRADE_API = {
   sales: '/sales',
   salesExport: '/sales/export',
   dashboardSales: '/dashboard/sales',
+  customers: '/customers',
   audit: '/audit/trade'
 } as const;

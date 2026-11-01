@@ -1,0 +1,40 @@
+.list-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.list-bar input[type="search"] {
+  flex: 1 1 260px;
+  min-width: 180px;
+}
+
+.list-bar select {
+  min-width: 140px;
+}
+
+.count {
+  margin-left: auto;
+  color: var(--muted, #6b7280);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .list-bar {
+    align-items: stretch;
+  }
+
+  .list-bar input[type="search"],
+  .list-bar select {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .count {
+    margin-left: 0;
+  }
+}
+

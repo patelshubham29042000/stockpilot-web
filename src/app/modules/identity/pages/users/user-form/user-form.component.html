@@ -1,29 +1,41 @@
-<app-page-header [subtitle]="id ? 'Edit user' : 'New user'">
-  <a class="btn alt" routerLink="/users">Back to users</a>
+<app-page-header [subtitle]="id ? 'Edit employee' : 'New employee'">
+  <a class="btn pri" routerLink="/users">Back to employees</a>
 </app-page-header>
-<app-notice [message]="error()" />
 @if (id && !isActive) {
   <p class="note">This account cannot sign in yet. Choose a role and switch Active on.</p>
 }
 
-<form class="card form" (ngSubmit)="save()">
-  <label>Username<input name="username" [(ngModel)]="username" [disabled]="!!id" required minlength="3"></label>
-  <label>Full name<input name="fullName" [(ngModel)]="fullName" required></label>
-  <label>{{ id ? 'New password (leave empty to keep)' : 'Password (8+ characters)' }}
-    <input name="password" type="password" autocomplete="new-password" [(ngModel)]="password" [required]="!id" minlength="8">
-  </label>
-  <label>Role
-    <select name="role" [ngModel]="roleId" (ngModelChange)="onRoleChange($event)">
-      <option [ngValue]="null">No role</option>
-      @for (r of roles(); track r.id) { <option [ngValue]="r.id">{{ r.name }}</option> }
-    </select>
-  </label>
-  <label class="switch">
-    <input name="isActive" type="checkbox" [(ngModel)]="isActive" [disabled]="roleId === null">
-    <span>Active (can sign in)</span>
-  </label>
-  <div class="row">
-    <button class="btn pri" [disabled]="busy()">Save user</button>
-    <a class="btn alt" routerLink="/users">Cancel</a>
+<form class="card" (ngSubmit)="save()">
+  <h2>Employee details</h2>
+  <div class="form">
+    <label>Employee ID<input name="employeeCode" [(ngModel)]="employeeCode" maxlength="20" autocomplete="off" [placeholder]="id ? '' : 'Leave empty to generate'"></label>
+    <label>Full name<input name="fullName" [(ngModel)]="fullName" required autocomplete="off"></label>
+    <label>Mobile number<input name="mobile" type="tel" [(ngModel)]="mobile" autocomplete="off"></label>
+    <label>Email<input name="email" type="email" [(ngModel)]="email" autocomplete="off"></label>
+    <label>Designation<input name="designation" [(ngModel)]="designation" placeholder="For example: Cashier" autocomplete="off"></label>
+    <label>Joining date<input name="joiningDate" type="date" [(ngModel)]="joiningDate"></label>
+  </div>
+
+  <h2>Sign-in and access</h2>
+  <div class="form">
+    <label>Username<input name="username" [(ngModel)]="username" [disabled]="!!id" required minlength="3" autocomplete="off"></label>
+    <label>{{ id ? 'New password (leave empty to keep)' : 'Password (8+ characters)' }}
+      <input name="password" type="password" autocomplete="new-password" [(ngModel)]="password" [required]="!id" minlength="8">
+    </label>
+    <label>Role
+      <select name="role" [ngModel]="roleId" (ngModelChange)="onRoleChange($event)">
+        <option [ngValue]="null">No role</option>
+        @for (r of roles(); track r.id) { <option [ngValue]="r.id">{{ r.name }}</option> }
+      </select>
+    </label>
+    <label class="switch">
+      <input name="isActive" type="checkbox" [(ngModel)]="isActive" [disabled]="roleId === null">
+      <span>Active (can sign in)</span>
+    </label>
+  </div>
+
+  <div class="row actions">
+    <button class="btn ok" [disabled]="busy()">Save employee</button>
+    <a class="btn cancel" routerLink="/users">Cancel</a>
   </div>
 </form>

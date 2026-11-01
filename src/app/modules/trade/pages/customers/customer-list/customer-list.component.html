@@ -1,0 +1,47 @@
+<app-page-header>
+  <a class="btn pri" routerLink="/customers/new">Add customer</a>
+</app-page-header>
+
+<div class="list-bar">
+  <input
+    type="search"
+    placeholder="Search name, mobile, email, GST, city or country..."
+    aria-label="Search customers"
+    [ngModel]="search()"
+    (ngModelChange)="search.set($event)">
+
+  <select
+    aria-label="Filter by customer type"
+    [ngModel]="typeFilter()"
+    (ngModelChange)="typeFilter.set($event)">
+    <option value="">All types</option>
+    @for (type of customerTypes; track type) {
+      <option [value]="type">{{ type }}</option>
+    }
+  </select>
+
+  <select
+    aria-label="Filter by customer status"
+    [ngModel]="activeFilter()"
+    (ngModelChange)="activeFilter.set($event)">
+    <option value="active">Active</option>
+    <option value="inactive">Inactive</option>
+    <option value="all">All customers</option>
+  </select>
+
+  <span class="count">
+    {{ shown().length }}
+    {{ shown().length === 1 ? 'customer' : 'customers' }}
+  </span>
+</div>
+
+<app-tabulator-grid
+  [columns]="columns"
+  idField="id"
+  [data]="shown()"
+  [pageSize]="25"
+  [responsive]="true"
+  maxHeight="70vh"
+  placeholder="No customers match."
+  (rowAction)="onAction($event)" />
+

@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { BRAND } from '../branding';
 
-export type DialogKind = 'success' | 'error' | 'info' | 'confirm';
+export type DialogKind = 'success' | 'error' | 'info' | 'confirm' | 'prompt';
 
 export interface DialogState {
   kind: DialogKind;
@@ -10,10 +10,14 @@ export interface DialogState {
   okText: string;
   yesText: string;
   noText: string;
-  resolve: (answer: boolean) => void;
+  resolve: (answer: boolean, text?: string) => void;
+  inputLabel?: string;
+  inputPlaceholder?: string;
+  minLength?: number;
 }
 
 export interface ConfirmOptions { title?: string; yesText?: string; noText?: string; }
+export interface PromptOptions extends ConfirmOptions { label?: string; placeholder?: string; minLength?: number; }
 
 /** Popup messages. Every popup is titled "POS System" unless another title is given. */
 @Injectable({ providedIn: 'root' })
@@ -41,11 +45,24 @@ export class Dialog {
     return this.show('confirm', message, options.title ?? BRAND.appName, options);
   }
 
+  /** A question with a text box, for example a reason. Resolves with the text, or null when cancelled. */
+  prompt(message: string, options: PromptOptions = {}): Promise<string | null> {
+    return new Promise<string | null>(resolve => {
+      const state: DialogState = {
+        kind: 'prompt', title: options.title ?? BRAND.appName, message,
+        okText: 'OK', yesText: options.yesText ?? 'Confirm', noText: options.noText ?? 'Cancel',
+        inputLabel: options.label ?? 'Reason', inputPlaceholder: options.placeholder ?? '', minLength: options.minLength ?? 0,
+        resolve: (yes, text) => resolve(yes ? (text ?? '').trim() : null)
+      };
+      if (this.current()) this.queue.push(state); else this.current.set(state);
+    });
+  }
+
   /** Called by the popup when a button is pressed. Shows the next waiting popup, if any. */
-  answer(value: boolean): void {
+  answer(value: boolean, text?: string): void {
     const open = this.current();
     if (!open) return;
-    open.resolve(value);
+    open.resolve(value, text);
     this.current.set(this.queue.shift() ?? null);
   }
 

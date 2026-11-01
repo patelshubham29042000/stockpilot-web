@@ -1,0 +1,75 @@
+
+<app-page-header [subtitle]="sale()?.number ?? ''">
+  <a class="btn pri" routerLink="/sales/find">
+    Back to Find sales
+  </a>
+</app-page-header>
+
+@if (sale(); as s) {
+  <div class="card info">
+    <div>
+      <span class="label">Bill no.</span>
+      <strong>{{ s.number }}</strong>
+    </div>
+
+    <div>
+      <span class="label">Date</span>
+      <strong>{{ s.createdAt | date:'medium' }}</strong>
+    </div>
+
+    <div>
+      <span class="label">Cashier</span>
+      <strong>{{ s.cashier }}</strong>
+    </div>
+
+    <div>
+      <span class="label">Status</span>
+      <span
+        class="badge"
+        [class.ok]="s.status === 'Completed'"
+        [class.warn]="s.status === 'Hold'"
+        [class.low]="s.status === 'Void'">
+        {{ s.status }}
+      </span>
+    </div>
+  </div>
+}
+
+<app-tabulator-grid
+  [columns]="columns"
+  idField="itemId"
+  [data]="lines()"
+  placeholder="This sale has no lines.">
+</app-tabulator-grid>
+
+<div class="card totals">
+  <div>
+    <span class="label">Items</span>
+    <strong>{{ sale()?.lines?.length ?? 0 }}</strong>
+  </div>
+
+  <div>
+    <span class="label">Units</span>
+    <strong>{{ units() }}</strong>
+  </div>
+
+  <div>
+    <span class="label">Total</span>
+    <strong>
+      {{ (sale()?.total ?? 0) | currency:'INR':'symbol':'1.2-2' }}
+    </strong>
+  </div>
+</div>
+
+@if (actions().length) {
+  <div class="row actions">
+    @for (a of actions(); track a.target) {
+      <button
+        type="button"
+        class="btn pri"
+        (click)="change(a.target)">
+        {{ a.target }}
+      </button>
+    }
+  </div>
+}

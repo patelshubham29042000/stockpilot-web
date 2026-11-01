@@ -1,5 +1,5 @@
 <app-page-header [subtitle]="id ? 'Edit role' : 'New role'">
-  <a class="btn alt" routerLink="/roles">Back to roles</a>
+  <a class="btn pri" routerLink="/roles">Back to roles</a>
 </app-page-header>
 @if (system()) {
   <p class="note">This is the built-in Admin role. It cannot be deleted, and Users and User Roles stay ticked so nobody can lock everyone out. Everything else can be changed.</p>
@@ -72,6 +72,6 @@
 
   <div class="row actions">
     <button class="btn pri" [disabled]="busy()">Save role</button>
-    <a class="btn alt" routerLink="/roles">Cancel</a>
+    <a class="btn cancel" routerLink="/roles">Cancel</a>
   </div>
 </form>

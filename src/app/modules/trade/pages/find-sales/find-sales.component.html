@@ -1,0 +1,33 @@
+<app-page-header>
+  <button type="button" class="btn info" (click)="exportCsv()">Export CSV</button>
+  <a class="btn pri" routerLink="/pos">Sell (POS)</a>
+</app-page-header>
+<p class="hint">Shows the last 7 days by default. Open a sale with View.</p>
+
+<form class="card filters" (ngSubmit)="apply()">
+  <label>From date
+    <input type="date" name="fromDate" [(ngModel)]="fromDate" [max]="toDate">
+  </label>
+  <label>To date
+    <input type="date" name="toDate" [(ngModel)]="toDate" [min]="fromDate">
+  </label>
+  <label>Status
+    <select name="status" [ngModel]="status" (ngModelChange)="status = $event; apply()">
+      <option value="all">All</option>
+      @for (s of statuses; track s) { <option [value]="s">{{ s }}</option> }
+    </select>
+  </label>
+  <div class="filter-actions">
+    <button class="btn pri" [disabled]="loading()">Filter</button>
+    <button type="button" class="btn alt" [disabled]="loading()" (click)="reset()">Reset</button>
+  </div>
+</form>
+
+<div class="list-bar">
+  <input type="search" placeholder="Search bill number or cashier…" aria-label="Search sales"
+         [ngModel]="search()" (ngModelChange)="search.set($event)">
+  <span class="count">{{ shown().length }} {{ shown().length === 1 ? 'sale' : 'sales' }} · Completed total {{ completedTotal() | currency:'INR':'symbol':'1.2-2' }}</span>
+</div>
+
+<app-tabulator-grid [columns]="columns" idField="id" [data]="shown()" [pageSize]="25" [responsive]="true" maxHeight="70vh"
+                    placeholder="No sales match these filters." (rowAction)="onAction($event)" />

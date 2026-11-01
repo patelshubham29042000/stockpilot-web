@@ -1,0 +1,6 @@
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.info .label,.totals .label{display:block;font-size:.8rem;color:var(--mut)}
+.totals{display:flex;flex-wrap:wrap;gap:12px 32px}
+.totals strong{font-size:1.25rem}
+.actions{margin-top:12px}
+.actions{margin-top:12px}

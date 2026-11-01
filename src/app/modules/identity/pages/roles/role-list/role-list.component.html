@@ -2,17 +2,12 @@
   @if (auth.can(PERM.rolesManage)) { <a class="btn pri" routerLink="/roles/new">New role</a> }
 </app-page-header>
 <p class="hint">A role is a set of permissions. Give a user a role to control what they can see and do.</p>
-<app-notice [message]="message()" />
 
-<app-data-grid [columns]="columns" [rows]="rows()" [loading]="loading()"
-               searchPlaceholder="Search roles…" emptyText="No roles yet. Create one, for example Manager or Cashier.">
-  <ng-template gridCell="name" let-row>
-    {{ row.name }} @if (row.isSystem) { <span class="badge">Built-in</span> }
-  </ng-template>
-  <ng-template gridActions let-row>
-    @if (auth.can(PERM.rolesManage)) {
-      <a class="btn alt sm" [routerLink]="['/roles', row.id, 'edit']">Edit</a>
-      @if (!row.isSystem) { <button type="button" class="btn bad sm" (click)="remove(row)">Delete</button> }
-    }
-  </ng-template>
-</app-data-grid>
+<div class="list-bar">
+  <input type="search" placeholder="Search roles…" aria-label="Search roles"
+         [ngModel]="search()" (ngModelChange)="search.set($event)">
+  <span class="count">{{ shown().length }} {{ shown().length === 1 ? 'role' : 'roles' }}</span>
+</div>
+
+<app-tabulator-grid [columns]="columns" idField="id" [data]="shown()" [pageSize]="25" [responsive]="true" maxHeight="70vh"
+                    placeholder="No roles yet. Create one, for example Manager or Cashier." (rowAction)="onAction($event)" />

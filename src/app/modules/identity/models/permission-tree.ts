@@ -29,15 +29,19 @@ export const PERMISSION_TREE: PermissionParent[] = [
   },
   {
     id: 'sales', label: 'Sale Register', icon: 'sales', children: [
-      { key: PERM.salesCreate, label: 'Sell (POS)', hint: 'Make sales at the counter' },
-      { key: PERM.salesReport, label: 'Find sales and reports', hint: 'See and export sales' }
+      { key: PERM.salesCreate, label: 'Sell Screen', hint: 'Make sales at the counter' },
+      { key: PERM.salesReport, label: 'Find sales and reports', hint: 'See and export sales' },
+      { key: PERM.salesStatus, label: 'Change sale status', hint: 'Complete, return or void a sale' }
     ]
   },
   {
     id: 'users', label: 'User Management', icon: 'users', children: [
-      { key: PERM.usersManage, label: 'Users', hint: 'Add users, activate them and assign roles' },
+      { key: PERM.usersManage, label: 'Employees', hint: 'Add employees, activate them and assign roles' },
       { key: PERM.rolesManage, label: 'User Roles', hint: 'Create and edit roles' },
       { key: PERM.auditView, label: 'Audit Logs', hint: 'See who did what and when' }
     ]
-  }
+  },
+  { id: 'maintenance', label: 'Maintenance Tools', icon: 'tools', children: [
+  { key: PERM.customersManage, label: 'Customers', hint: 'Add, edit and deactivate customers' }
+] }
 ];

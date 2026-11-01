@@ -17,6 +17,8 @@ input,select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;fon
 .btn:hover{filter:brightness(1.15)}
 .btn.alt{background:#e4ebe8;color:var(--ink)}
 .btn.pri{background:var(--acc);color:#2a1d05;font-weight:600}
+.btn.info { background: #2563eb; color: #fff; font-weight: 600; }
+.btn.cancel{background:#f97316;color:#fff;font-weight:600}
 .btn.bad{background:var(--bad)}
 .btn.sm{padding:5px 10px;font-size:.85rem}
 .btn:disabled{opacity:.5;cursor:not-allowed}
@@ -52,3 +54,15 @@ html{-webkit-text-size-adjust:100%}
 td,th{vertical-align:middle}
 td.wrap{white-space:normal;min-width:180px;max-width:480px;overflow-wrap:anywhere}
 .btn.ok{background:var(--ok);color:#fff}
+
+/* Search bar above a list grid */
+.list-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:10px}
+.list-bar input[type=search]{flex:1;min-width:180px;max-width:360px}
+.list-bar .count{margin-left:auto;color:var(--mut);font-size:.85rem}
+@media(max-width:480px){.list-bar input[type=search]{max-width:none}.list-bar .count{margin-left:0}}
+
+/* Search bar above a list grid */
+.list-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:10px}
+.list-bar input[type=search]{flex:1;min-width:180px;max-width:360px}
+.list-bar .count{margin-left:auto;color:var(--mut);font-size:.85rem}
+@media(max-width:480px){.list-bar input[type=search]{max-width:none}.list-bar .count{margin-left:0}}

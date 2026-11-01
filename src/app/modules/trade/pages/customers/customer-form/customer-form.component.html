@@ -1,0 +1,128 @@
+<app-page-header [subtitle]="id ? 'Edit customer' : 'New customer'">
+  <a class="btn pri" routerLink="/customers">Back to customers</a>
+</app-page-header>
+
+@if (loading()) {
+  <p class="note">Loading customer details...</p>
+} @else {
+  <form class="card customer-form" (ngSubmit)="save()">
+
+    <h2>Customer details</h2>
+
+    <div class="form-grid">
+      <label>
+        Customer name *
+        <input
+          name="name"
+          [(ngModel)]="name"
+          required
+          minlength="2"
+          autocomplete="off">
+      </label>
+
+      <label>
+        Mobile number *
+        <input
+          name="mobile"
+          type="tel"
+          [(ngModel)]="mobile"
+          required
+          autocomplete="off">
+      </label>
+
+      <label>
+        Email
+        <input
+          name="email"
+          type="email"
+          [(ngModel)]="email"
+          autocomplete="off">
+      </label>
+
+      <label>
+        Date of birth
+        <input
+          name="dateOfBirth"
+          type="date"
+          [(ngModel)]="dateOfBirth">
+      </label>
+
+      <label>
+        Customer type
+        <select name="customerType" [(ngModel)]="customerType">
+          @for (type of customerTypes; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+      </label>
+
+      <label>
+        GST number
+        <input
+          name="gstNumber"
+          [(ngModel)]="gstNumber"
+          autocomplete="off">
+      </label>
+    </div>
+
+    <h2>Address information</h2>
+
+    <div class="form-grid address-grid">
+      <label>
+        Address
+        <input
+          name="addressLine1"
+          [(ngModel)]="addressLine1"
+          autocomplete="street-address">
+      </label>
+
+      <label>
+        City
+        <input name="city" [(ngModel)]="city" autocomplete="address-level2">
+      </label>
+
+      <label>
+        District
+        <input name="district" [(ngModel)]="district">
+      </label>
+
+      <label>
+        State
+        <input name="state" [(ngModel)]="state" autocomplete="address-level1">
+      </label>
+
+      <label>
+        Country
+        <input name="country" [(ngModel)]="country" autocomplete="country-name">
+      </label>
+
+      <label>
+        PIN code
+        <input name="pinCode" [(ngModel)]="pinCode" autocomplete="postal-code">
+      </label>
+    </div>
+
+    <h2>Additional information</h2>
+
+    <div class="additional-grid">
+      <label>
+        Notes
+        <textarea name="notes" rows="2" [(ngModel)]="notes"></textarea>
+      </label>
+
+      <label class="switch">
+        <input name="isActive" type="checkbox" [(ngModel)]="isActive">
+        <span>Active customer</span>
+      </label>
+    </div>
+
+    <div class="row actions">
+      <button type="submit" class="btn ok" [disabled]="busy()">
+        {{ busy() ? 'Saving...' : 'Save customer' }}
+      </button>
+
+      <a class="btn cancel" routerLink="/customers">Cancel</a>
+    </div>
+
+  </form>
+}

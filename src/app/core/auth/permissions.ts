@@ -8,6 +8,9 @@ export const PERM = {
   purchaseOrdersManage: 'purchaseorders.manage',
   salesCreate: 'sales.create',
   salesReport: 'sales.report',
+  salesStatus: 'sales.status',
+  customersManage: 'customers.manage',
+  customersRead: 'customers.read',
   usersManage: 'users.manage',
   rolesManage: 'roles.manage',
   auditView: 'audit.view'

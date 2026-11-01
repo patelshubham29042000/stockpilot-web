@@ -1,5 +1,5 @@
 <app-page-header [subtitle]="viewing ? (po()?.number ?? '') : ''">
-  <a class="btn alt" routerLink="/purchase-orders/find">{{ viewing ? 'Back to Find PO' : 'Find PO' }}</a>
+  <a class="btn pri" routerLink="/purchase-orders/find">{{ viewing ? 'Back to Find PO' : 'Find PO' }}</a>
 </app-page-header>
 
 @if (viewing) {
@@ -54,6 +54,6 @@
 } @else {
   <div class="row actions">
     <button type="button" class="btn ok" [disabled]="busy()" (click)="save()">Save purchase order</button>
-    <button type="button" class="btn alt" [disabled]="busy() || lines().length === 0" (click)="clearAll()">Clear</button>
+    <button type="button" class="btn cancel" [disabled]="busy() || lines().length === 0" (click)="clearAll()">Clear</button>
   </div>
 }

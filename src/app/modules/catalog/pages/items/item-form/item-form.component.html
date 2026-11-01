@@ -1,5 +1,5 @@
 <app-page-header [subtitle]="id ? 'Edit item' : 'New item'">
-  <a class="btn alt" routerLink="/items">Back to items</a>
+  <a class="btn pri" routerLink="/items">Back to items</a>
 </app-page-header>
 <app-notice [message]="error()" />
 
@@ -26,7 +26,7 @@
   <label>Reorder at<input name="reorderLevel" type="number" min="0" [(ngModel)]="model.reorderLevel"></label>
   <div class="row">
     <button class="btn pri" [disabled]="busy()">Save item</button>
-    <a class="btn alt" routerLink="/items">Cancel</a>
+    <a class="btn cancel" routerLink="/items">Cancel</a>
   </div>
 </form>
 

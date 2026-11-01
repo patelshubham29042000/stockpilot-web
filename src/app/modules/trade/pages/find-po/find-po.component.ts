@@ -49,10 +49,10 @@ export class FindPoComponent {
       formatter: (cell: any) => `<strong>${esc(cell.getValue())}</strong>`
     },
     {
-      title: 'Date', field: 'createdAt', width: 170, responsive: 4,
+      title: 'Date', field: 'createdAt', width: 200, responsive: 4,
       formatter: (cell: any) => { const d = new Date(cell.getValue()); return isNaN(+d) ? '' : esc(dateFormat.format(d)); }
     },
-    { title: 'Supplier', field: 'supplier', minWidth: 140, widthGrow: 2, formatter: 'textarea', responsive: 3 },
+    { title: 'Supplier', field: 'supplier', minWidth: 120, widthGrow: 2, formatter: 'textarea', responsive: 3 },
     {
       title: 'Total', field: 'total', width: 130, hozAlign: 'right', sorter: 'number', responsive: 2,
       formatter: 'money', formatterParams: { symbol: '₹', precision: 2, thousand: ',', decimal: '.' }
@@ -66,7 +66,7 @@ export class FindPoComponent {
       }
     },
     {
-      title: '', width: 270, hozAlign: 'right', headerSort: false, responsive: 0,
+      title: 'Action', width: 270, hozAlign: 'right', headerSort: false, responsive: 0,
       formatter: (cell: any) => {
         const pending = cell.getRow().getData().status === 'Pending';
         return `<div class="act">

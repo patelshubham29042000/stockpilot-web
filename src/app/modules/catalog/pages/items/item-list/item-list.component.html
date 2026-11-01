@@ -1,8 +1,8 @@
 <app-page-header>
   @if (auth.can(PERM.itemsManage)) {
     <a class="btn pri" routerLink="/items/new">Add item</a>
-    <label class="btn alt">Import CSV<input type="file" accept=".csv" hidden (change)="import($event)"></label>
-    <button type="button" class="btn alt" (click)="exportCsv()">Export CSV</button>
+    <label class="btn info">Import CSV<input type="file" accept=".csv" hidden (change)="import($event)"></label>
+    <button type="button" class="btn info" (click)="exportCsv()">Export CSV</button>
   }
 </app-page-header>
 @if (auth.can(PERM.itemsManage)) {

@@ -1,1 +1,4 @@
+h2{font-size:1rem;margin:0 0 10px}
+.form + h2{margin-top:20px}
 .switch{flex-direction:row;align-items:center;gap:8px;color:var(--ink);padding-bottom:8px}
+.actions{margin-top:18px}
